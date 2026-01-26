@@ -264,24 +264,33 @@ ul {
     bottom: 2rem;
     left: 50%;
     transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 0.5rem;
+}
+
+.hero-scroll span {
+    display: block;
     color: var(--text-muted);
     font-size: 0.875rem;
+    text-align: center;
     animation: bounce 2s infinite;
+}
+
+.hero-scroll svg {
+    display: block;
+    margin: 0.5rem auto 0;
+    color: var(--text-muted);
+    animation: bounce 2s infinite;
+    animation-delay: 0.1s;
 }
 
 @keyframes bounce {
     0%, 20%, 50%, 80%, 100% {
-        transform: translateX(-50%) translateY(0);
+        transform: translateY(0);
     }
     40% {
-        transform: translateX(-50%) translateY(-10px);
+        transform: translateY(-10px);
     }
     60% {
-        transform: translateX(-50%) translateY(-5px);
+        transform: translateY(-5px);
     }
 }
 
