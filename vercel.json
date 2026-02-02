@@ -1,8 +1,5 @@
 {
   "buildCommand": null,
   "outputDirectory": ".",
-  "framework": null,
-  "env": {
-    "SILICONFLOW_API_KEY": "@siliconflow_api_key"
-  }
+  "framework": null
 }
