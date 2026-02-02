@@ -15,6 +15,7 @@
     const chatInput = document.getElementById('chatInput');
     const chatSend = document.getElementById('chatSend');
     const chatBadge = document.getElementById('chatBadge');
+    const chatResizeHandle = document.getElementById('chatResizeHandle');
 
     // 状态
     let isOpen = false;
@@ -53,6 +54,81 @@
         document.addEventListener('click', (e) => {
             if (isOpen && !chatWindow.contains(e.target) && !chatToggle.contains(e.target)) {
                 closeChat();
+            }
+        });
+
+        // 调整大小功能
+        initResizeHandle();
+    }
+
+    // 初始化调整大小手柄
+    function initResizeHandle() {
+        let isResizing = false;
+        let startX, startY;
+        let startWidth, startHeight;
+
+        chatResizeHandle.addEventListener('mousedown', (e) => {
+            isResizing = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            startWidth = chatWindow.offsetWidth;
+            startHeight = chatWindow.offsetHeight;
+            chatWindow.classList.add('resizing');
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isResizing) return;
+
+            const deltaX = startX - e.clientX; // 向左拖动增加宽度
+            const deltaY = e.clientY - startY; // 向下拖动增加高度
+
+            const newWidth = Math.max(320, Math.min(window.innerWidth * 0.9, startWidth + deltaX));
+            const newHeight = Math.max(400, Math.min(window.innerHeight * 0.9, startHeight + deltaY));
+
+            chatWindow.style.width = newWidth + 'px';
+            chatWindow.style.height = newHeight + 'px';
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (isResizing) {
+                isResizing = false;
+                chatWindow.classList.remove('resizing');
+            }
+        });
+
+        // 触摸支持
+        chatResizeHandle.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            isResizing = true;
+            startX = touch.clientX;
+            startY = touch.clientY;
+            startWidth = chatWindow.offsetWidth;
+            startHeight = chatWindow.offsetHeight;
+            chatWindow.classList.add('resizing');
+            e.preventDefault();
+            e.stopPropagation();
+        });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isResizing) return;
+            const touch = e.touches[0];
+
+            const deltaX = startX - touch.clientX;
+            const deltaY = touch.clientY - startY;
+
+            const newWidth = Math.max(320, Math.min(window.innerWidth * 0.9, startWidth + deltaX));
+            const newHeight = Math.max(400, Math.min(window.innerHeight * 0.9, startHeight + deltaY));
+
+            chatWindow.style.width = newWidth + 'px';
+            chatWindow.style.height = newHeight + 'px';
+        });
+
+        document.addEventListener('touchend', () => {
+            if (isResizing) {
+                isResizing = false;
+                chatWindow.classList.remove('resizing');
             }
         });
     }

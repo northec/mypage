@@ -1015,6 +1015,10 @@ section[id] {
     right: 0;
     width: 420px;
     height: 600px;
+    min-width: 320px;
+    min-height: 400px;
+    max-width: 90vw;
+    max-height: 90vh;
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
     border-radius: var(--radius-lg);
@@ -1025,13 +1029,45 @@ section[id] {
     opacity: 0;
     visibility: hidden;
     transform: translateY(20px) scale(0.95);
-    transition: all var(--transition-base);
+    transition: opacity var(--transition-base), visibility var(--transition-base);
 }
 
 .chat-window.open {
     opacity: 1;
     visibility: visible;
     transform: translateY(0) scale(1);
+}
+
+.chat-window.resizing {
+    transition: none;
+}
+
+/* 调整大小手柄 */
+.chat-resize-handle {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 16px;
+    height: 16px;
+    cursor: nwse-resize;
+    z-index: 10;
+}
+
+.chat-resize-handle::before {
+    content: '';
+    position: absolute;
+    bottom: 3px;
+    right: 3px;
+    width: 8px;
+    height: 8px;
+    border-right: 2px solid var(--text-muted);
+    border-bottom: 2px solid var(--text-muted);
+    opacity: 0.5;
+    transition: opacity var(--transition-fast);
+}
+
+.chat-resize-handle:hover::before {
+    opacity: 1;
 }
 
 /* 对话窗口头部 */
